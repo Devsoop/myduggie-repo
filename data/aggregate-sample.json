@@ -1,0 +1,12 @@
+{
+  "product_reference": "gid://shopify/Product/duggie",
+  "average": 4.3,
+  "total_count": 47,
+  "distribution": {
+    "5": 42,
+    "4": 3,
+    "3": 1,
+    "2": 0,
+    "1": 1
+  }
+}

@@ -1,0 +1,98 @@
+{{ 'reviews-components.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign average = section.settings.average | default: '4.3' | times: 1.0
+  assign total_count = section.settings.total_count | default: 47
+  assign count_5 = section.settings.count_5 | default: 42
+  assign count_4 = section.settings.count_4 | default: 3
+  assign count_3 = section.settings.count_3 | default: 1
+  assign count_2 = section.settings.count_2 | default: 0
+  assign count_1 = section.settings.count_1 | default: 1
+  assign caption_prefix = section.settings.caption_prefix
+-%}
+
+<div class="reviews-surface reviews-surface--aggregate section-{{ section.id }}">
+  <div class="reviews-surface__outer page-width">
+    <div class="reviews-aggregate">
+      {% render 'aggregate-rating-block',
+        average: average,
+        total_count: total_count,
+        count_5: count_5,
+        count_4: count_4,
+        count_3: count_3,
+        count_2: count_2,
+        count_1: count_1,
+        caption_prefix: caption_prefix,
+        unique_id: section.id
+      %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Aggregate rating block",
+  "tag": "section",
+  "class": "reviews-section-aggregate",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Defaults mirror data/aggregate-sample.json (4.3 average). M2+ will compute from live reviews."
+    },
+    {
+      "type": "text",
+      "id": "caption_prefix",
+      "label": "Caption prefix",
+      "default": "From"
+    },
+    {
+      "type": "text",
+      "id": "average",
+      "label": "Average rating",
+      "info": "One decimal, e.g. 4.3 for half-star acceptance test",
+      "default": "4.3"
+    },
+    {
+      "type": "number",
+      "id": "total_count",
+      "label": "Total review count",
+      "default": 47
+    },
+    {
+      "type": "number",
+      "id": "count_5",
+      "label": "5 star count",
+      "default": 42
+    },
+    {
+      "type": "number",
+      "id": "count_4",
+      "label": "4 star count",
+      "default": 3
+    },
+    {
+      "type": "number",
+      "id": "count_3",
+      "label": "3 star count",
+      "default": 1
+    },
+    {
+      "type": "number",
+      "id": "count_2",
+      "label": "2 star count",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "count_1",
+      "label": "1 star count",
+      "default": 1
+    }
+  ],
+  "presets": [
+    {
+      "name": "Aggregate rating block"
+    }
+  ]
+}
+{% endschema %}

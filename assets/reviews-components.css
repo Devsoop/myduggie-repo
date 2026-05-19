@@ -1,0 +1,326 @@
+/* None Better Reviews — Milestone 1 (§4.6 tokens) */
+
+.reviews-surface {
+  --reviews-bg-page: #ffffff;
+  --reviews-bg-outer: #efece3;
+  --reviews-bg-pill: #f5f2ed;
+  --reviews-text-primary: #1f1f1e;
+  --reviews-text-secondary: #5f5e5a;
+  --reviews-text-tertiary: #888780;
+  --reviews-border-tertiary: rgba(0, 0, 0, 0.12);
+  --reviews-radius-card: 8px;
+  --reviews-radius-outer: 12px;
+  --reviews-font-body: Inter, system-ui, -apple-system, sans-serif;
+
+  font-family: var(--reviews-font-body);
+  color: var(--reviews-text-primary);
+  box-sizing: border-box;
+}
+
+.reviews-surface *,
+.reviews-surface *::before,
+.reviews-surface *::after {
+  box-sizing: border-box;
+}
+
+.reviews-surface__outer {
+  background: var(--reviews-bg-outer);
+  border-radius: var(--reviews-radius-outer);
+  padding: 24px;
+}
+
+@media screen and (max-width: 749px) {
+  .reviews-surface__outer {
+    padding: 16px;
+  }
+}
+
+/* —— Aggregate block —— */
+
+.reviews-aggregate {
+  background: var(--reviews-bg-page);
+  border-radius: var(--reviews-radius-card);
+  padding: 28px 32px;
+  margin-bottom: 24px;
+}
+
+.reviews-aggregate__grid {
+  display: grid;
+  grid-template-columns: minmax(140px, 200px) 1fr;
+  gap: 32px 48px;
+  align-items: start;
+}
+
+@media screen and (max-width: 749px) {
+  .reviews-aggregate {
+    padding: 20px 16px;
+  }
+
+  .reviews-aggregate__grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+.reviews-aggregate__score {
+  font-size: 36px;
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--reviews-text-primary);
+}
+
+.reviews-aggregate__stars {
+  display: flex;
+  gap: 2px;
+  margin-top: 8px;
+}
+
+.reviews-aggregate__caption {
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--reviews-text-tertiary);
+}
+
+.reviews-aggregate__distribution {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.reviews-aggregate__row {
+  display: grid;
+  grid-template-columns: 36px 1fr 32px;
+  gap: 12px;
+  align-items: center;
+}
+
+.reviews-aggregate__row-label {
+  font-size: 12px;
+  color: var(--reviews-text-secondary);
+  white-space: nowrap;
+}
+
+.reviews-aggregate__bar-track {
+  height: 8px;
+  background: var(--reviews-border-tertiary);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.reviews-aggregate__bar-fill {
+  height: 100%;
+  background: var(--reviews-text-tertiary);
+  border-radius: 4px;
+  min-width: 0;
+  transition: width 0.2s ease;
+}
+
+.reviews-aggregate__row-count {
+  font-size: 12px;
+  color: var(--reviews-text-secondary);
+  text-align: right;
+}
+
+/* —— Stars —— */
+
+.reviews-stars {
+  display: inline-flex;
+  gap: 1px;
+  align-items: center;
+  line-height: 0;
+}
+
+.reviews-stars--card {
+  gap: 0;
+}
+
+.reviews-stars__icon {
+  display: block;
+  flex-shrink: 0;
+}
+
+.reviews-stars--card .reviews-stars__icon {
+  width: 12px;
+  height: 12px;
+}
+
+.reviews-stars--aggregate .reviews-stars__icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* —— Buyer review card —— */
+
+.reviews-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.reviews-card {
+  background: var(--reviews-bg-page);
+  border-radius: var(--reviews-radius-card);
+  padding: 20px;
+  overflow: hidden;
+}
+
+.reviews-card__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-bottom: 10px;
+}
+
+.reviews-card__header-left {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.reviews-card__name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--reviews-text-primary);
+}
+
+.reviews-card__date {
+  font-size: 11px;
+  color: var(--reviews-text-tertiary);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.reviews-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.reviews-card__pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  font-size: 10px;
+  line-height: 1.3;
+  color: var(--reviews-text-secondary);
+  background: var(--reviews-bg-pill);
+  border-radius: 999px;
+}
+
+.reviews-card__returns {
+  font-size: 10px;
+  color: var(--reviews-text-tertiary);
+}
+
+.reviews-card__owns {
+  margin-bottom: 10px;
+}
+
+.reviews-card__owns-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--reviews-text-tertiary);
+  margin-bottom: 6px;
+}
+
+.reviews-card__owns-icons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.reviews-card__own-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+}
+
+.reviews-card__own-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.reviews-card__usage {
+  font-size: 11px;
+  color: var(--reviews-text-tertiary);
+  margin-bottom: 14px;
+}
+
+.reviews-card__divider {
+  border: none;
+  border-top: 1px solid var(--reviews-border-tertiary);
+  margin: 0 0 14px;
+}
+
+.reviews-card__photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.reviews-card__photo {
+  display: block;
+  width: 56px;
+  height: 56px;
+  border-radius: 6px;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid var(--reviews-border-tertiary);
+  background: var(--reviews-bg-pill);
+  cursor: pointer;
+}
+
+.reviews-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.reviews-card__prose {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.reviews-card__prose-item + .reviews-card__prose-item {
+  margin-top: 0;
+}
+
+.reviews-card__prompt {
+  font-size: 10px;
+  color: var(--reviews-text-tertiary);
+  margin-bottom: 4px;
+}
+
+.reviews-card__body {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--reviews-text-primary);
+}
+
+.reviews-test-page__title {
+  font-size: 22px;
+  font-weight: 500;
+  margin: 0 0 8px;
+  color: var(--reviews-text-primary);
+}
+
+.reviews-test-page__intro {
+  font-size: 13px;
+  color: var(--reviews-text-secondary);
+  margin: 0 0 24px;
+  max-width: 52ch;
+}

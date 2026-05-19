@@ -1,0 +1,29 @@
+{
+  "sections": {
+    "aggregate": {
+      "type": "aggregate-rating-block",
+      "settings": {
+        "average": "4.3",
+        "total_count": 47,
+        "count_5": 42,
+        "count_4": 3,
+        "count_3": 1,
+        "count_2": 0,
+        "count_1": 1,
+        "caption_prefix": "From"
+      }
+    },
+    "buyer_cards": {
+      "type": "review-card-buyer",
+      "settings": {
+        "heading": "Buyer review cards",
+        "intro": "Milestone 1 — §5.6 Buyer Review Card. Sample data from shop metafield custom.reviews (see data/reviews-sample.json).",
+        "verified_buyer_label": "✓ Verified buyer",
+        "sample_label": "Sample",
+        "returns_label": "Order returned",
+        "photo_limit": 4
+      }
+    }
+  },
+  "order": ["aggregate", "buyer_cards"]
+}

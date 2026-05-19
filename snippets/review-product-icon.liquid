@@ -1,0 +1,28 @@
+{%- doc -%}
+  Product outline icon for Owns row (§5.6).
+  @param {string} icon_type - duggie | keychain | pipe
+  @param {string} color_hex - Fill/stroke color from owns_colors
+{%- enddoc -%}
+
+{%- liquid
+  assign icon_type = icon_type | default: 'duggie'
+  assign color_hex = color_hex | default: '#1F1F1E'
+-%}
+
+<span class="reviews-card__own-icon" title="{{ icon_type }}">
+  {%- case icon_type -%}
+    {%- when 'keychain' -%}
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="16" cy="18" r="9" stroke="{{ color_hex }}" stroke-width="2.5" fill="none"/>
+        <path d="M16 9V5M13 5h6" stroke="{{ color_hex }}" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    {%- when 'pipe' -%}
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="4" y="14" width="24" height="4" rx="2" fill="{{ color_hex }}"/>
+      </svg>
+    {%- else -%}
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="8" y="6" width="16" height="20" rx="3" stroke="{{ color_hex }}" stroke-width="2.5" fill="none"/>
+      </svg>
+  {%- endcase -%}
+</span>

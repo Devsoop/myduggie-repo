@@ -1,0 +1,326 @@
+{
+  "reviews": [
+    {
+      "id": "r01",
+      "order_id": "gid://shopify/Order/1001",
+      "reviewer_type": "buyer",
+      "reviewer_name": { "first": "Alex", "last": "Rivera" },
+      "rating": 5,
+      "answers": {
+        "how_often": "Daily",
+        "where_it_lives": "Pocket",
+        "dugout_experience": "Dugout veteran",
+        "prose": [
+          {
+            "prompt_key": "surprised",
+            "label": "What surprised you?",
+            "body": "The weight in hand is different than photos suggest — denser, more deliberate. The lid click is satisfying in a way I did not expect from aluminum."
+          },
+          {
+            "prompt_key": "wish_different",
+            "label": "Anything you wish were different in the next version?",
+            "body": "A slightly deeper bowl would be my only note. Everything else feels considered."
+          },
+          {
+            "prompt_key": "anything_else",
+            "label": "Anything else? Color in person, accessories you also bought — or whatever else feels worth sharing. (Optional)",
+            "body": "Slate Blue reads warmer in person than on screen. I carry it with the Keychain daily."
+          }
+        ]
+      },
+      "photos": [
+        { "url": "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=400&h=400&fit=crop", "alt": "Lil Duggie on desk" },
+        { "url": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=400&h=400&fit=crop", "alt": "Close-up of finish" }
+      ],
+      "owns": [
+        {
+          "product_reference": "gid://shopify/Product/duggie",
+          "handle": "the-lil-duggie",
+          "title": "Lil' Duggie",
+          "icon_type": "duggie",
+          "color_hex": "#3D5A80"
+        },
+        {
+          "product_reference": "gid://shopify/Product/keychain",
+          "handle": "the-none-better-keychain",
+          "title": "Keychain",
+          "icon_type": "keychain",
+          "color_hex": "#8B4513"
+        }
+      ],
+      "status": "approved",
+      "submitted_at": "2026-05-10T14:00:00Z",
+      "order_returned": false,
+      "is_sample": false
+    },
+    {
+      "id": "r02",
+      "order_id": "gid://shopify/Order/1002",
+      "reviewer_type": "buyer",
+      "reviewer_name": { "first": "Jordan", "last": "Lee" },
+      "rating": 1,
+      "answers": {
+        "how_often": "Occasionally",
+        "where_it_lives": "Home",
+        "dugout_experience": "Dugout rookie",
+        "prose": [
+          {
+            "prompt_key": "surprised",
+            "label": "What surprised you?",
+            "body": "Honestly expected more for the price point. The finish had a small mark out of the box."
+          },
+          {
+            "prompt_key": "wish_different",
+            "label": "Anything you wish were different in the next version?",
+            "body": "Better QC on arrival. I returned it."
+          },
+          {
+            "prompt_key": "anything_else",
+            "label": "Anything else? Color in person, accessories you also bought — or whatever else feels worth sharing. (Optional)",
+            "body": ""
+          }
+        ]
+      },
+      "photos": [],
+      "owns": [
+        {
+          "product_reference": "gid://shopify/Product/duggie",
+          "handle": "the-lil-duggie",
+          "title": "Lil' Duggie",
+          "icon_type": "duggie",
+          "color_hex": "#1F1F1E"
+        }
+      ],
+      "status": "approved",
+      "submitted_at": "2026-03-12T10:00:00Z",
+      "order_returned": true,
+      "is_sample": false
+    },
+    {
+      "id": "r03",
+      "order_id": "gid://shopify/Order/1003",
+      "reviewer_type": "buyer",
+      "reviewer_name": { "first": "Sam", "last": "Nguyen" },
+      "rating": 4,
+      "answers": {
+        "how_often": "Weekly",
+        "where_it_lives": "Bag",
+        "dugout_experience": "Dugout veteran",
+        "prose": [
+          {
+            "prompt_key": "surprised",
+            "label": "What surprised you?",
+            "body": "How little it weighs for something that feels this solid."
+          },
+          {
+            "prompt_key": "wish_different",
+            "label": "Anything you wish were different in the next version?",
+            "body": ""
+          },
+          {
+            "prompt_key": "anything_else",
+            "label": "Anything else? Color in person, accessories you also bought — or whatever else feels worth sharing. (Optional)",
+            "body": "Forest Green is the right green — muted, not loud."
+          }
+        ]
+      },
+      "photos": [
+        { "url": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop", "alt": "In bag carry" }
+      ],
+      "owns": [
+        {
+          "product_reference": "gid://shopify/Product/duggie",
+          "handle": "the-lil-duggie",
+          "title": "Lil' Duggie",
+          "icon_type": "duggie",
+          "color_hex": "#2D5016"
+        }
+      ],
+      "status": "approved",
+      "submitted_at": "2026-05-14T09:00:00Z",
+      "order_returned": false,
+      "is_sample": true
+    },
+    {
+      "id": "r04",
+      "order_id": "gid://shopify/Order/1004",
+      "reviewer_type": "buyer",
+      "reviewer_name": { "first": "Morgan", "last": "Patel" },
+      "rating": 5,
+      "answers": {
+        "how_often": "Daily",
+        "where_it_lives": "Pocket",
+        "dugout_experience": "Dugout veteran",
+        "prose": [
+          {
+            "prompt_key": "surprised",
+            "label": "What surprised you?",
+            "body": "The Pair as a set makes sense — Keychain keeps the Duggie where I need it."
+          },
+          {
+            "prompt_key": "wish_different",
+            "label": "Anything you wish were different in the next version?",
+            "body": "Nothing yet after six weeks."
+          },
+          {
+            "prompt_key": "anything_else",
+            "label": "Anything else? Color in person, accessories you also bought — or whatever else feels worth sharing. (Optional)",
+            "body": ""
+          }
+        ]
+      },
+      "photos": [],
+      "owns": [
+        {
+          "product_reference": "gid://shopify/Product/duggie",
+          "handle": "the-lil-duggie",
+          "title": "Lil' Duggie",
+          "icon_type": "duggie",
+          "color_hex": "#B8860B"
+        },
+        {
+          "product_reference": "gid://shopify/Product/keychain",
+          "handle": "the-none-better-keychain",
+          "title": "Keychain",
+          "icon_type": "keychain",
+          "color_hex": "#CD853F"
+        }
+      ],
+      "status": "approved",
+      "submitted_at": "2026-04-01T12:00:00Z",
+      "order_returned": false,
+      "is_sample": false
+    },
+    {
+      "id": "r05",
+      "order_id": "gid://shopify/Order/1005",
+      "reviewer_type": "recipient",
+      "reviewer_name": { "first": "Taylor", "last": "Kim" },
+      "rating": 5,
+      "answers": {
+        "how_often": "Daily",
+        "where_it_lives": "Home",
+        "dugout_experience": "Dugout rookie",
+        "prose": [
+          {
+            "prompt_key": "getting_it",
+            "label": "How did getting it feel?",
+            "body": "Sample recipient review — shape validation only for M1."
+          }
+        ]
+      },
+      "photos": [],
+      "owns": [
+        {
+          "product_reference": "gid://shopify/Product/duggie",
+          "handle": "the-lil-duggie",
+          "title": "Lil' Duggie",
+          "icon_type": "duggie",
+          "color_hex": "#708090"
+        }
+      ],
+      "status": "approved",
+      "submitted_at": "2026-05-01T08:00:00Z",
+      "order_returned": false,
+      "is_sample": false
+    },
+    {
+      "id": "r06",
+      "order_id": "gid://shopify/Order/1006",
+      "reviewer_type": "gifter",
+      "reviewer_name": { "first": "Casey", "last": "Brooks" },
+      "rating": 5,
+      "answers": {
+        "prose": [
+          {
+            "prompt_key": "gift_land",
+            "label": "How did the gift land?",
+            "body": "Sample gifter review — shape validation only for M1."
+          }
+        ]
+      },
+      "photos": [],
+      "owns": [],
+      "gave": [],
+      "status": "approved",
+      "submitted_at": "2026-04-15T16:00:00Z",
+      "order_returned": false,
+      "is_sample": false
+    },
+    {
+      "id": "r07",
+      "order_id": "gid://shopify/Order/1007",
+      "reviewer_type": "accessory",
+      "reviewer_name": { "first": "Riley", "last": "Chen" },
+      "rating": 4,
+      "answers": {
+        "how_often": "Weekly",
+        "prose": [
+          {
+            "prompt_key": "combined",
+            "label": "Why you chose it. How you use it. Or whatever else feels worth sharing.",
+            "body": "Sample accessory review — shape validation only for M1."
+          }
+        ]
+      },
+      "photos": [],
+      "owns": [
+        {
+          "product_reference": "gid://shopify/Product/keychain",
+          "handle": "the-none-better-keychain",
+          "title": "Keychain",
+          "icon_type": "keychain",
+          "color_hex": "#4A4A48"
+        }
+      ],
+      "status": "approved",
+      "submitted_at": "2026-05-12T11:00:00Z",
+      "order_returned": false,
+      "is_sample": false
+    },
+    {
+      "id": "r08",
+      "order_id": "gid://shopify/Order/1008",
+      "reviewer_type": "buyer",
+      "reviewer_name": { "first": "Drew", "last": "Martinez" },
+      "rating": 3,
+      "answers": {
+        "how_often": "Weekly",
+        "where_it_lives": "Bag",
+        "dugout_experience": "Dugout rookie",
+        "prose": [
+          {
+            "prompt_key": "surprised",
+            "label": "What surprised you?",
+            "body": "Takes a week to appreciate the machining. Grew on me."
+          },
+          {
+            "prompt_key": "wish_different",
+            "label": "Anything you wish were different in the next version?",
+            "body": ""
+          },
+          {
+            "prompt_key": "anything_else",
+            "label": "Anything else? Color in person, accessories you also bought — or whatever else feels worth sharing. (Optional)",
+            "body": ""
+          }
+        ]
+      },
+      "photos": [],
+      "owns": [
+        {
+          "product_reference": "gid://shopify/Product/duggie",
+          "handle": "the-lil-duggie",
+          "title": "Lil' Duggie",
+          "icon_type": "duggie",
+          "color_hex": "#6B5B95"
+        }
+      ],
+      "status": "approved",
+      "submitted_at": "2026-02-20T14:00:00Z",
+      "order_returned": false,
+      "is_sample": false
+    }
+  ],
+  "buyer_display_ids": ["r01", "r02", "r03", "r04", "r08"]
+}
