@@ -1,0 +1,101 @@
+{%- doc -%}
+  §5.6 Buyer Review Card — markup only. Data from shop.metafields.custom.reviews (M1) or metaobjects (M2).
+{%- enddoc -%}
+
+{%- liquid
+  assign verified_buyer_label = verified_buyer_label | default: '✓ Verified buyer'
+  assign sample_label = sample_label | default: 'Sample'
+  assign returns_label = returns_label | default: 'Order returned'
+  assign photo_limit = photo_limit | default: 4 | plus: 0
+  assign last_initial = reviewer_last | slice: 0, 1 | upcase
+  assign display_name = reviewer_first | append: ' ' | append: last_initial | append: '.'
+-%}
+
+<article class="reviews-card" data-review-id="{{ review_id }}">
+  <header class="reviews-card__header">
+    <div class="reviews-card__header-left">
+      <span class="reviews-card__name">{{ display_name }}</span>
+      {% render 'review-stars-whole', rating: rating %}
+    </div>
+    {% render 'review-date', submitted_at: submitted_at %}
+  </header>
+
+  <div class="reviews-card__tags">
+    <span class="reviews-card__pill">{{ verified_buyer_label }}</span>
+    {%- if is_sample -%}
+      <span class="reviews-card__pill">{{ sample_label }}</span>
+    {%- endif -%}
+    {%- if order_returned -%}
+      <span class="reviews-card__returns">{{ returns_label }}</span>
+    {%- endif -%}
+  </div>
+
+  {%- if owns_count > 0 -%}
+    <div class="reviews-card__owns">
+      <p class="reviews-card__owns-label">Owns</p>
+      <div class="reviews-card__owns-icons">
+        {%- if owns_count >= 1 -%}
+          {% render 'review-product-icon', icon_type: own_1_icon_type, color_hex: own_1_color_hex %}
+        {%- endif -%}
+        {%- if owns_count >= 2 -%}
+          {% render 'review-product-icon', icon_type: own_2_icon_type, color_hex: own_2_color_hex %}
+        {%- endif -%}
+        {%- if owns_count >= 3 -%}
+          {% render 'review-product-icon', icon_type: own_3_icon_type, color_hex: own_3_color_hex %}
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {% render 'review-usage-qualifier',
+    how_often: how_often,
+    where_it_lives: where_it_lives,
+    dugout_experience: dugout_experience
+  %}
+
+  <hr class="reviews-card__divider">
+
+  {%- if photo_count > 0 -%}
+    <div class="reviews-card__photos">
+      {%- assign photos_shown = 0 -%}
+      {%- if photo_count >= 1 and photo_1_url != blank and photos_shown < photo_limit -%}
+        <button type="button" class="reviews-card__photo" data-reviews-lightbox-stub aria-label="Enlarge photo">
+          <img src="{{ photo_1_url }}" alt="{{ photo_1_alt | escape }}" width="56" height="56" loading="lazy">
+        </button>
+        {%- assign photos_shown = photos_shown | plus: 1 -%}
+      {%- endif -%}
+      {%- if photo_count >= 2 and photo_2_url != blank and photos_shown < photo_limit -%}
+        <button type="button" class="reviews-card__photo" data-reviews-lightbox-stub aria-label="Enlarge photo">
+          <img src="{{ photo_2_url }}" alt="{{ photo_2_alt | escape }}" width="56" height="56" loading="lazy">
+        </button>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <div class="reviews-card__prose">
+    {%- if prose_count >= 1 -%}
+      <div class="reviews-card__prose-item">
+        <p class="reviews-card__prompt">{{ prose_1_label }}</p>
+        {%- if prose_1_body != blank -%}
+          <p class="reviews-card__body">{{ prose_1_body }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+    {%- if prose_count >= 2 -%}
+      <div class="reviews-card__prose-item">
+        <p class="reviews-card__prompt">{{ prose_2_label }}</p>
+        {%- if prose_2_body != blank -%}
+          <p class="reviews-card__body">{{ prose_2_body }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+    {%- if prose_count >= 3 -%}
+      <div class="reviews-card__prose-item">
+        <p class="reviews-card__prompt">{{ prose_3_label }}</p>
+        {%- if prose_3_body != blank -%}
+          <p class="reviews-card__body">{{ prose_3_body }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</article>

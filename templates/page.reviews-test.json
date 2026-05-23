@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "aggregate": {
+      "type": "aggregate-rating-block",
+      "settings": {
+        "caption_prefix": "From"
+      }
+    },
+    "buyer_cards": {
+      "type": "review-card-buyer",
+      "settings": {
+        "heading": "Buyer review cards",
+        "intro": "Milestone 1 — §5.6 Buyer Review Card. Data from shop metafield custom.reviews (see docs/decisions/reviews-sample.json).",
+        "verified_buyer_label": "✓ Verified buyer",
+        "sample_label": "Sample",
+        "returns_label": "Order returned",
+        "photo_limit": 4
+      }
+    }
+  },
+  "order": ["aggregate", "buyer_cards"]
+}

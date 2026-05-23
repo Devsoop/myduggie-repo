@@ -1,0 +1,96 @@
+{%- doc -%}
+  §5.9 Aggregate Rating Block inner markup.
+  @param {number} average - e.g. 4.3
+  @param {number} total_count
+  @param {number} count_5
+  @param {number} count_4
+  @param {number} count_3
+  @param {number} count_2
+  @param {number} count_1
+  @param {string} [caption_prefix] - e.g. "From"
+  @param {string} [unique_id] - For SVG gradient ids
+{%- enddoc -%}
+
+{%- assign unique_id = unique_id | default: 'aggregate-block' -%}
+
+{%- liquid
+  assign average = average | default: 0 | times: 1.0
+  assign total_count = total_count | default: 0 | plus: 0
+  assign count_5 = count_5 | default: 0 | plus: 0
+  assign count_4 = count_4 | default: 0 | plus: 0
+  assign count_3 = count_3 | default: 0 | plus: 0
+  assign count_2 = count_2 | default: 0 | plus: 0
+  assign count_1 = count_1 | default: 0 | plus: 0
+  assign caption_prefix = caption_prefix | default: 'From'
+
+  assign max_count = count_5
+  if count_4 > max_count
+    assign max_count = count_4
+  endif
+  if count_3 > max_count
+    assign max_count = count_3
+  endif
+  if count_2 > max_count
+    assign max_count = count_2
+  endif
+  if count_1 > max_count
+    assign max_count = count_1
+  endif
+  if max_count == 0
+    assign max_count = 1
+  endif
+
+  assign pct_5 = count_5 | times: 100 | divided_by: max_count
+  assign pct_4 = count_4 | times: 100 | divided_by: max_count
+  assign pct_3 = count_3 | times: 100 | divided_by: max_count
+  assign pct_2 = count_2 | times: 100 | divided_by: max_count
+  assign pct_1 = count_1 | times: 100 | divided_by: max_count
+
+  assign average_display = average | round: 1
+-%}
+
+<div class="reviews-aggregate__grid">
+  <div class="reviews-aggregate__summary">
+    <p class="reviews-aggregate__score">{{ average_display }}</p>
+    {% render 'review-stars-aggregate', average: average, unique_id: unique_id %}
+    <p class="reviews-aggregate__caption">{{ caption_prefix }} {{ total_count }} reviews</p>
+  </div>
+
+  <div class="reviews-aggregate__distribution" role="list">
+    <div class="reviews-aggregate__row" role="listitem">
+      <span class="reviews-aggregate__row-label">5 ★</span>
+      <div class="reviews-aggregate__bar-track">
+        <div class="reviews-aggregate__bar-fill" style="width: {{ pct_5 }}%;"></div>
+      </div>
+      <span class="reviews-aggregate__row-count">{{ count_5 }}</span>
+    </div>
+    <div class="reviews-aggregate__row" role="listitem">
+      <span class="reviews-aggregate__row-label">4 ★</span>
+      <div class="reviews-aggregate__bar-track">
+        <div class="reviews-aggregate__bar-fill" style="width: {{ pct_4 }}%;"></div>
+      </div>
+      <span class="reviews-aggregate__row-count">{{ count_4 }}</span>
+    </div>
+    <div class="reviews-aggregate__row" role="listitem">
+      <span class="reviews-aggregate__row-label">3 ★</span>
+      <div class="reviews-aggregate__bar-track">
+        <div class="reviews-aggregate__bar-fill" style="width: {{ pct_3 }}%;"></div>
+      </div>
+      <span class="reviews-aggregate__row-count">{{ count_3 }}</span>
+    </div>
+    <div class="reviews-aggregate__row" role="listitem">
+      <span class="reviews-aggregate__row-label">2 ★</span>
+      <div class="reviews-aggregate__bar-track">
+        <div class="reviews-aggregate__bar-fill" style="width: {{ pct_2 }}%;"></div>
+      </div>
+      <span class="reviews-aggregate__row-count">{{ count_2 }}</span>
+    </div>
+    <div class="reviews-aggregate__row" role="listitem">
+      <span class="reviews-aggregate__row-label">1 ★</span>
+      <div class="reviews-aggregate__bar-track">
+        <div class="reviews-aggregate__bar-fill" style="width: {{ pct_1 }}%;"></div>
+      </div>
+      <span class="reviews-aggregate__row-count">{{ count_1 }}</span>
+    </div>
+  </div>
+</div>
