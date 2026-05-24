@@ -177,6 +177,8 @@ sections/
 
 snippets/
   review-card-buyer.liquid
+  review-card-pill.liquid
+  review-pill-icon.liquid
   review-stars-*.liquid, review-date.liquid, review-product-icon.liquid, …
 
 assets/

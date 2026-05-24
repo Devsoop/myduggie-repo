@@ -3,7 +3,7 @@
 {%- enddoc -%}
 
 {%- liquid
-  assign verified_buyer_label = verified_buyer_label | default: '✓ Verified buyer'
+  assign verified_buyer_label = verified_buyer_label | default: 'Verified buyer'
   assign sample_label = sample_label | default: 'Sample'
   assign returns_label = returns_label | default: 'Order returned'
   assign photo_limit = photo_limit | default: 4 | plus: 0
@@ -21,9 +21,9 @@
   </header>
 
   <div class="reviews-card__tags">
-    <span class="reviews-card__pill">{{ verified_buyer_label }}</span>
+    {% render 'review-card-pill', label: verified_buyer_label, icon: 'verified-buyer' %}
     {%- if is_sample -%}
-      <span class="reviews-card__pill">{{ sample_label }}</span>
+      {% render 'review-card-pill', label: sample_label %}
     {%- endif -%}
     {%- if order_returned -%}
       <span class="reviews-card__returns">{{ returns_label }}</span>
