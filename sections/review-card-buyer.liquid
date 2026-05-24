@@ -1,3 +1,4 @@
+{%- comment -%} M1 revision #8: display_label for card; label = full form prompt (see reviews-sample.json). {%- endcomment -%}
 {{ 'reviews-components.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
@@ -18,8 +19,11 @@
   endif
 -%}
 
-<div class="reviews-surface reviews-surface--buyer-cards section-{{ section.id }}">
-  <div class="reviews-surface__outer page-width">
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style reviews-surface reviews-surface--buyer-cards section-{{ section.id }}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
     {%- if section.settings.heading != blank -%}
       <h2 class="reviews-test-page__title">{{ section.settings.heading }}</h2>
     {%- endif -%}
@@ -56,7 +60,6 @@
             assign where_it_lives = review.answers.where_it_lives
             assign dugout_experience = review.answers.dugout_experience
 
-            assign prose_count = 0
             assign prose_1_label = ''
             assign prose_1_body = ''
             assign prose_2_label = ''
@@ -67,17 +70,14 @@
             if review.answers.prose != blank
               for prose_item in review.answers.prose
                 if forloop.index == 1
-                  assign prose_1_label = prose_item.label
+                  assign prose_1_label = prose_item.display_label | default: prose_item.label
                   assign prose_1_body = prose_item.body
-                  assign prose_count = 1
                 elsif forloop.index == 2
-                  assign prose_2_label = prose_item.label
+                  assign prose_2_label = prose_item.display_label | default: prose_item.label
                   assign prose_2_body = prose_item.body
-                  assign prose_count = 2
                 elsif forloop.index == 3
-                  assign prose_3_label = prose_item.label
+                  assign prose_3_label = prose_item.display_label | default: prose_item.label
                   assign prose_3_body = prose_item.body
-                  assign prose_count = 3
                 endif
               endfor
             endif
@@ -137,7 +137,6 @@
             how_often: how_often,
             where_it_lives: where_it_lives,
             dugout_experience: dugout_experience,
-            prose_count: prose_count,
             photo_count: photo_count,
             owns_count: owns_count,
             prose_1_label: prose_1_label,
@@ -164,7 +163,6 @@
         {%- endfor -%}
       </div>
     {%- endif -%}
-  </div>
 </div>
 
 <script>
@@ -181,6 +179,52 @@
   "tag": "section",
   "class": "reviews-section-buyer",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "t:options.page"
+        },
+        {
+          "value": "full-width",
+          "label": "t:options.full"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
     {
       "type": "paragraph",
       "content": "Reads shop metafield custom.reviews (JSON). Owns row pairs review.owns (icon_type) with review.owns_colors (color_hex) by index per §4.1."

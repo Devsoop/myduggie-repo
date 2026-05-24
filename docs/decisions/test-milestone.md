@@ -126,6 +126,8 @@ Per §4.4, production sets the review’s `is_sample` from the customer’s `is_
 | `reviewer_name` | `reviewer_name` |
 | `rating` | `rating` |
 | `answers` | `answers` |
+| `answers.prose[].label` | form prompt (full question text) |
+| `answers.prose[].display_label` | card prompt (short wireframe label; falls back to `label`) |
 | `photos` | `photos` |
 | `owns` | `owns` (`list.product_reference`) |
 | `owns_colors` | `owns_colors` (parallel color per product) |

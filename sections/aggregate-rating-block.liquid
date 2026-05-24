@@ -60,9 +60,12 @@
   endif
 -%}
 
-<div class="reviews-surface reviews-surface--aggregate section-{{ section.id }}">
-  <div class="reviews-surface__outer page-width">
-    <div class="reviews-aggregate">
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style reviews-surface reviews-surface--aggregate section-{{ section.id }}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="reviews-aggregate">
       {%- if reviews_data == blank or reviews_data.reviews == blank -%}
         <p class="reviews-test-page__intro">
           No reviews data. Paste <code>docs/decisions/reviews-sample.json</code> into
@@ -83,7 +86,6 @@
           unique_id: section.id
         %}
       {%- endif -%}
-    </div>
   </div>
 </div>
 
@@ -93,6 +95,52 @@
   "tag": "section",
   "class": "reviews-section-aggregate",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "t:options.page"
+        },
+        {
+          "value": "full-width",
+          "label": "t:options.full"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
     {
       "type": "paragraph",
       "content": "Computed from the same buyer reviews shown on this page (buyer_display_ids in shop metafield custom.reviews)."

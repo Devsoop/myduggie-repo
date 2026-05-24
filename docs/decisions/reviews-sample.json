@@ -24,6 +24,7 @@
           {
             "prompt_key": "anything_else",
             "label": "Anything else? Color in person, accessories you also bought — or whatever else feels worth sharing. (Optional)",
+            "display_label": "Anything else?",
             "body": "Slate Blue reads warmer in person than on screen. I carry it with the Keychain daily."
           }
         ]
@@ -79,6 +80,7 @@
           {
             "prompt_key": "anything_else",
             "label": "Anything else? Color in person, accessories you also bought — or whatever else feels worth sharing. (Optional)",
+            "display_label": "Anything else?",
             "body": ""
           }
         ]
@@ -124,6 +126,7 @@
           {
             "prompt_key": "anything_else",
             "label": "Anything else? Color in person, accessories you also bought — or whatever else feels worth sharing. (Optional)",
+            "display_label": "Anything else?",
             "body": "Forest Green is the right green — muted, not loud."
           }
         ]
@@ -171,6 +174,7 @@
           {
             "prompt_key": "anything_else",
             "label": "Anything else? Color in person, accessories you also bought — or whatever else feels worth sharing. (Optional)",
+            "display_label": "Anything else?",
             "body": ""
           }
         ]
@@ -315,6 +319,7 @@
           {
             "prompt_key": "anything_else",
             "label": "Anything else? Color in person, accessories you also bought — or whatever else feels worth sharing. (Optional)",
+            "display_label": "Anything else?",
             "body": ""
           }
         ]

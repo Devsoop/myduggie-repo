@@ -1,15 +1,13 @@
-/* None Better Reviews — Milestone 1 (§4.6 tokens) */
+/* None Better Reviews — Milestone 1 */
 
 .reviews-surface {
   --reviews-bg-page: #ffffff;
-  --reviews-bg-outer: #efece3;
   --reviews-bg-pill: #f5f2ed;
   --reviews-text-primary: #1f1f1e;
   --reviews-text-secondary: #5f5e5a;
   --reviews-text-tertiary: #888780;
   --reviews-border-tertiary: rgba(0, 0, 0, 0.12);
   --reviews-radius-card: 8px;
-  --reviews-radius-outer: 12px;
   --reviews-font-body: Inter, system-ui, -apple-system, sans-serif;
 
   font-family: var(--reviews-font-body);
@@ -23,17 +21,7 @@
   box-sizing: border-box;
 }
 
-.reviews-surface__outer {
-  background: var(--reviews-bg-outer);
-  border-radius: var(--reviews-radius-outer);
-  padding: 24px;
-}
-
-@media screen and (max-width: 749px) {
-  .reviews-surface__outer {
-    padding: 16px;
-  }
-}
+/* Horizon section grid handles page width — no custom outer panel wrapper */
 
 /* —— Aggregate block —— */
 
@@ -49,6 +37,11 @@
   grid-template-columns: minmax(140px, 200px) 1fr;
   gap: 32px 48px;
   align-items: start;
+}
+
+/* M1 revision #2: center summary column (score, stars, caption) */
+.reviews-aggregate__summary {
+  text-align: center;
 }
 
 @media screen and (max-width: 749px) {
@@ -70,9 +63,8 @@
   color: var(--reviews-text-primary);
 }
 
-.reviews-aggregate__stars {
-  display: flex;
-  gap: 2px;
+.reviews-aggregate__summary .reviews-stars {
+  justify-content: center;
   margin-top: 8px;
 }
 
@@ -152,10 +144,14 @@
 
 /* —— Buyer review card —— */
 
+/* M1 revision #7: cap card width on desktop for readable line length */
 .reviews-cards {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  max-width: 840px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .reviews-card {
@@ -163,6 +159,8 @@
   border-radius: var(--reviews-radius-card);
   padding: 20px;
   overflow: hidden;
+  /* M1 revision #4: card outline once outer tan panel removed */
+  border: 1px solid var(--reviews-border-tertiary);
 }
 
 .reviews-card__header {
@@ -182,13 +180,13 @@
 }
 
 .reviews-card__name {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--reviews-text-primary);
 }
 
 .reviews-card__date {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--reviews-text-tertiary);
   margin-left: auto;
   flex-shrink: 0;
@@ -206,7 +204,7 @@
   display: inline-flex;
   align-items: center;
   padding: 3px 8px;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.3;
   color: var(--reviews-text-secondary);
   background: var(--reviews-bg-pill);
@@ -214,7 +212,7 @@
 }
 
 .reviews-card__returns {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--reviews-text-tertiary);
 }
 
@@ -223,7 +221,7 @@
 }
 
 .reviews-card__owns-label {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.5px;
   text-transform: uppercase;
@@ -252,7 +250,7 @@
 }
 
 .reviews-card__usage {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--reviews-text-tertiary);
   margin-bottom: 14px;
 }
@@ -299,14 +297,15 @@
   margin-top: 0;
 }
 
+/* M1 revision #5: wireframe-weight typography (was 10px / 13px per §4.6) */
 .reviews-card__prompt {
-  font-size: 10px;
+  font-size: 13px;
   color: var(--reviews-text-tertiary);
   margin-bottom: 4px;
 }
 
 .reviews-card__body {
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.55;
   color: var(--reviews-text-primary);
 }
@@ -319,8 +318,22 @@
 }
 
 .reviews-test-page__intro {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--reviews-text-secondary);
   margin: 0 0 24px;
   max-width: 52ch;
+}
+
+@media screen and (max-width: 749px) {
+  .reviews-cards {
+    max-width: none;
+  }
+
+  .reviews-card__prompt {
+    font-size: 12px;
+  }
+
+  .reviews-card__body {
+    font-size: 15px;
+  }
 }
