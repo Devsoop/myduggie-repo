@@ -17,6 +17,15 @@
   if display_filter == blank
     assign show_all_buyers = true
   endif
+
+  assign use_metaobjects = false
+  if section.settings.data_source == 'metaobjects'
+    assign use_metaobjects = true
+  elsif section.settings.data_source == 'auto'
+    if shop.metaobjects.review.values.size > 0
+      assign use_metaobjects = true
+    endif
+  endif
 -%}
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
@@ -31,7 +40,38 @@
       <p class="reviews-test-page__intro">{{ section.settings.intro }}</p>
     {%- endif -%}
 
-    {%- if reviews_data == blank or reviews_data.reviews == blank -%}
+    {%- if use_metaobjects -%}
+      <div class="reviews-cards">
+        {%- assign mo_cards_shown = 0 -%}
+        {%- for review_entry in shop.metaobjects.review.values -%}
+          {%- if review_entry.reviewer_type.value != 'buyer' -%}
+            {%- continue -%}
+          {%- endif -%}
+          {%- if review_entry.status.value != 'approved' -%}
+            {%- continue -%}
+          {%- endif -%}
+          {%- assign entry_handle = review_entry.system.handle | default: review_entry.handle -%}
+          {%- assign id_token = ',' | append: entry_handle | append: ',' -%}
+          {%- unless show_all_buyers or display_filter_padded contains id_token -%}
+            {%- continue -%}
+          {%- endunless -%}
+          {%- assign mo_cards_shown = mo_cards_shown | plus: 1 -%}
+          {% render 'review-buyer-card-from-metaobject',
+            review_entry: review_entry,
+            verified_buyer_label: verified_buyer_label,
+            sample_label: sample_label,
+            returns_label: returns_label,
+            photo_limit: photo_limit
+          %}
+        {%- endfor -%}
+        {%- if mo_cards_shown == 0 -%}
+          <p class="reviews-test-page__intro">
+            No buyer Review metaobjects match <code>buyer_display_ids</code>. See
+            <code>docs/decisions/reviews-metaobject-seed.md</code>.
+          </p>
+        {%- endif -%}
+      </div>
+    {%- elsif reviews_data == blank or reviews_data.reviews == blank -%}
       <p class="reviews-test-page__intro">
         No reviews data. Paste <code>docs/decisions/reviews-sample.json</code> into
         <strong>Settings → Custom data → Shop → reviews</strong> (namespace <code>custom</code>, key <code>reviews</code>).
@@ -226,8 +266,19 @@
       "default": 24
     },
     {
+      "type": "select",
+      "id": "data_source",
+      "label": "Data source",
+      "options": [
+        { "value": "metafield_json", "label": "Shop metafield JSON (M1)" },
+        { "value": "metaobjects", "label": "Review metaobjects" },
+        { "value": "auto", "label": "Auto (metaobjects if any exist)" }
+      ],
+      "default": "metafield_json"
+    },
+    {
       "type": "paragraph",
-      "content": "Reads shop metafield custom.reviews (JSON). Owns row pairs review.owns (icon_type) with review.owns_colors (color_hex) by index per §4.1."
+      "content": "M2: metaobjects use §4.1 fields; JSON fallback uses custom.reviews. buyer_display_ids filters by sample id / metaobject handle (r01, r02, …)."
     },
     {
       "type": "text",

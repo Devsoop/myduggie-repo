@@ -6,7 +6,7 @@ Custom Shopify Online Store 2.0 theme based on **Horizon 3.5.1**, including the 
 |--|--|
 | **Dev store** | `myduggie-test.myshopify.com` (see `shopify.theme.toml`) |
 | **Milestone branch** | `usman/reviews-test` |
-| **Architecture doc** | [`docs/decisions/test-milestone.md`](docs/decisions/test-milestone.md) |
+| **Architecture doc** | [`docs/decisions/reviews-milestones.md`](docs/decisions/reviews-milestones.md) |
 
 ---
 
@@ -101,7 +101,41 @@ You should see:
 ### 4. Optional: verify 4.3 fractional stars
 
 Theme editor → **Aggregate rating block** section → **Average override** → `4.3`  
-(Four full stars + 30% fill on the fifth; see `docs/decisions/test-milestone.md`.)
+(Four full stars + 30% fill on the fifth; see `docs/decisions/reviews-milestones.md`.)
+
+---
+
+## Milestone 2 — data layer + link inactive
+
+**Docs:** [`docs/decisions/reviews-milestones.md`](docs/decisions/reviews-milestones.md) (M2 section) · [`docs/decisions/reviews-metaobject-seed.md`](docs/decisions/reviews-metaobject-seed.md)
+
+### 1. Shopify Admin (manual)
+
+Follow the M2 checklist in `reviews-milestones.md`:
+
+- Metaobject type **Review** (§4.1 fields)
+- Product `custom.outline_image`
+- Customer `custom.is_sample_reviewer`
+- Seed entries per `reviews-metaobject-seed.md`
+
+### 2. Link inactive page
+
+**Online Store → Pages → Add page**
+
+- **Handle:** `review-link-inactive`
+- **Theme template:** `page.review-link-inactive`
+
+**Test URLs:**
+
+```
+/pages/review-link-inactive?state=expired
+/pages/review-link-inactive?state=used
+/pages/review-link-inactive?order=gid://shopify/Order/1001   # used when r01 metaobject exists
+```
+
+### 3. Metaobject data on test page (optional)
+
+Theme editor → **Buyer review cards** / **Aggregate rating block** → **Data source** → `Metaobjects` or `Auto`. Default remains **Shop metafield JSON (M1)**.
 
 ---
 
@@ -109,19 +143,20 @@ Theme editor → **Aggregate rating block** section → **Average override** →
 
 ```
 docs/decisions/
-  test-milestone.md           # Architecture & acceptance notes
-  reviews-sample.json         # Sample JSON → paste into shop metafield
+  reviews-milestones.md       # M1 + M2 + M3 handoff
+  reviews-metaobject-seed.md  # M2 seed guide
+  reviews-sample.json         # Sample JSON → shop metafield custom.reviews
 
 sections/
   review-card-buyer.liquid
   aggregate-rating-block.liquid
+  review-link-inactive.liquid
 
 snippets/
   review-card-buyer.liquid
+  review-buyer-card-from-metaobject.liquid
+  review-status-card.liquid
   review-stars-aggregate.liquid
-  review-stars-whole.liquid
-  review-date.liquid
-  review-product-icon.liquid
   …
 
 assets/
@@ -129,6 +164,7 @@ assets/
 
 templates/
   page.reviews-test.json
+  page.review-link-inactive.json
 ```
 
 ---
@@ -152,12 +188,12 @@ Standard Shopify theme directories:
 
 ## Documentation
 
-- **Milestone 1 decisions:** [`docs/decisions/test-milestone.md`](docs/decisions/test-milestone.md)
+- **Reviews milestones (M1–M3):** [`docs/decisions/reviews-milestones.md`](docs/decisions/reviews-milestones.md)
 - **Shopify theme docs:** https://shopify.dev/docs/storefronts/themes
 
 ---
 
 ## Notes
 
-- **M2+ (not in this milestone):** Review metaobjects, submit flow, App Proxy, product-page filters — see architecture doc.
+- **M3+:** Review forms, App Proxy submit, Klaviyo, PDP reviews surface — see `reviews-milestones.md` (Milestone 3+).
 - Keep store credentials and `.env` files out of git; use Shopify CLI auth only.

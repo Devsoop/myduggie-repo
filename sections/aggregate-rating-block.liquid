@@ -23,7 +23,47 @@
     assign show_all_buyers = true
   endif
 
-  if reviews_data.reviews != blank
+  assign use_metaobjects = false
+  if section.settings.data_source == 'metaobjects'
+    assign use_metaobjects = true
+  elsif section.settings.data_source == 'auto'
+    if shop.metaobjects.review.values.size > 0
+      assign use_metaobjects = true
+    endif
+  endif
+
+  if use_metaobjects
+    for review_entry in shop.metaobjects.review.values
+      if review_entry.reviewer_type.value != 'buyer'
+        continue
+      endif
+      if review_entry.status.value != 'approved'
+        continue
+      endif
+      assign entry_handle = review_entry.system.handle | default: review_entry.handle
+      assign id_token = ',' | append: entry_handle | append: ','
+      unless show_all_buyers or display_filter_padded contains id_token
+        continue
+      endunless
+      assign r = review_entry.rating.value | plus: 0
+      assign rating_sum = rating_sum | plus: r
+      assign total_count = total_count | plus: 1
+      if r == 5
+        assign count_5 = count_5 | plus: 1
+      elsif r == 4
+        assign count_4 = count_4 | plus: 1
+      elsif r == 3
+        assign count_3 = count_3 | plus: 1
+      elsif r == 2
+        assign count_2 = count_2 | plus: 1
+      elsif r == 1
+        assign count_1 = count_1 | plus: 1
+      endif
+    endfor
+    if total_count > 0
+      assign average = rating_sum | times: 100 | divided_by: total_count | times: 0.01
+    endif
+  elsif reviews_data.reviews != blank
     for review in reviews_data.reviews
       if review.reviewer_type != 'buyer'
         continue
@@ -66,13 +106,17 @@
   style="{% render 'spacing-style', settings: section.settings %}"
 >
   <div class="reviews-aggregate">
-      {%- if reviews_data == blank or reviews_data.reviews == blank -%}
-        <p class="reviews-test-page__intro">
-          No reviews data. Paste <code>docs/decisions/reviews-sample.json</code> into
-          <strong>Settings → Custom data → Shop → reviews</strong> (namespace <code>custom</code>, key <code>reviews</code>).
-        </p>
-      {%- elsif total_count == 0 -%}
-        <p class="reviews-test-page__intro">No buyer reviews match <code>buyer_display_ids</code> in the shop metafield.</p>
+      {%- if total_count == 0 -%}
+        {%- if use_metaobjects -%}
+          <p class="reviews-test-page__intro">No approved buyer Review metaobjects match <code>buyer_display_ids</code>. See <code>docs/decisions/reviews-metaobject-seed.md</code>.</p>
+        {%- elsif reviews_data == blank or reviews_data.reviews == blank -%}
+          <p class="reviews-test-page__intro">
+            No reviews data. Paste <code>docs/decisions/reviews-sample.json</code> into
+            <strong>Settings → Custom data → Shop → reviews</strong> (namespace <code>custom</code>, key <code>reviews</code>).
+          </p>
+        {%- else -%}
+          <p class="reviews-test-page__intro">No buyer reviews match <code>buyer_display_ids</code> in the shop metafield.</p>
+        {%- endif -%}
       {%- else -%}
         {% render 'aggregate-rating-block',
           average: average,
@@ -142,8 +186,19 @@
       "default": 0
     },
     {
+      "type": "select",
+      "id": "data_source",
+      "label": "Data source",
+      "options": [
+        { "value": "metafield_json", "label": "Shop metafield JSON (M1)" },
+        { "value": "metaobjects", "label": "Review metaobjects" },
+        { "value": "auto", "label": "Auto (metaobjects if any exist)" }
+      ],
+      "default": "metafield_json"
+    },
+    {
       "type": "paragraph",
-      "content": "Computed from the same buyer reviews shown on this page (buyer_display_ids in shop metafield custom.reviews)."
+      "content": "Computed from the same buyer reviews as the card section (buyer_display_ids + data source)."
     },
     {
       "type": "text",

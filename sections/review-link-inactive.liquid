@@ -1,0 +1,126 @@
+{{ 'reviews-components.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  §5.5b token state (M2 theme-only).
+
+  Shopify's request object does not expose URL query parameters on storefront pages
+  (request.params.state / request.params.order are always blank in theme Liquid).
+  See: https://shopify.dev/docs/api/liquid/objects/request
+
+  M2 behavior today:
+  - Defaults to "expired" copy (safe fallback per §5.5b).
+  - Theme editor "Preview state" setting can force expired or used for QA.
+
+  M3 (App Proxy + form redirects):
+  - Validate signed token server-side (expired 60+ days, already submitted, invalid).
+  - Redirect to this page with state known server-side (e.g. ?state= used via proxy
+    session, Liquid-rendered flag, or a dedicated route) — not via request.params here.
+  - Optional: metaobject lookup by order_id after submit to detect "used" without token.
+
+  The request.params lines below are intentional placeholders for that wiring;
+  they do not read live URL query strings until M3 infrastructure lands.
+{%- endcomment -%}
+
+{%- liquid
+  assign link_state = 'expired'
+  assign preview_state = request.params.state | default: section.settings.preview_state
+
+  if preview_state == 'used' or preview_state == 'expired'
+    assign link_state = preview_state
+  else
+    assign order_param = request.params.order | strip
+    if order_param != blank
+      for review_entry in shop.metaobjects.review.values
+        assign mo_order_id = review_entry.order_id.value | strip
+        if mo_order_id == order_param
+          assign link_state = 'used'
+          break
+        endif
+      endfor
+    endif
+  endif
+-%}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style reviews-surface reviews-surface--status section-{{ section.id }}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="reviews-status-page">
+    {% render 'review-status-card', link_state: link_state %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Review link inactive",
+  "tag": "section",
+  "class": "reviews-section-link-inactive",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        { "value": "page-width", "label": "t:options.page" },
+        { "value": "full-width", "label": "t:options.full" }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Preview (theme editor)"
+    },
+    {
+      "type": "select",
+      "id": "preview_state",
+      "label": "Preview state when URL has no ?state=",
+      "options": [
+        { "value": "", "label": "Auto (order lookup or expired)" },
+        { "value": "expired", "label": "Expired" },
+        { "value": "used", "label": "Already submitted" }
+      ],
+      "default": ""
+    },
+    {
+      "type": "paragraph",
+      "content": "§5.5b — M2: use Preview state for QA. URL ?state= / ?order= do not reach theme Liquid (no request.params on pages). Token validation + real redirects: M3 App Proxy."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Review link inactive"
+    }
+  ]
+}
+{% endschema %}

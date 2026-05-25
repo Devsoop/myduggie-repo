@@ -7,14 +7,29 @@
   assign sample_label = sample_label | default: 'Sample'
   assign returns_label = returns_label | default: 'Order returned'
   assign photo_limit = photo_limit | default: 4 | plus: 0
-  assign last_initial = reviewer_last | slice: 0, 1 | upcase
-  assign display_name = reviewer_first | append: ' ' | append: last_initial | append: '.'
+  # §4.1 display: first name + last initial. Accepts a pre-split first/last from either
+  # the M1 JSON ({first, last}) or the M2 metaobject (`reviewer_name` parsed via
+  # snippets/review-reviewer-name-parts.liquid). Single-word names render without the dot.
+  assign display_name = ''
+  assign reviewer_first = reviewer_first | strip
+  assign reviewer_last = reviewer_last | strip
+  if reviewer_first != blank and reviewer_last != blank
+    assign last_initial = reviewer_last | slice: 0, 1 | upcase
+    assign display_name = reviewer_first | append: ' ' | append: last_initial | append: '.'
+  elsif reviewer_first != blank
+    assign display_name = reviewer_first
+  elsif reviewer_last != blank
+    assign last_initial = reviewer_last | slice: 0, 1 | upcase
+    assign display_name = last_initial | append: '.'
+  endif
 -%}
 
 <article class="reviews-card" data-review-id="{{ review_id }}">
   <header class="reviews-card__header">
     <div class="reviews-card__header-left">
-      <span class="reviews-card__name">{{ display_name }}</span>
+      {%- if display_name != blank -%}
+        <span class="reviews-card__name">{{ display_name }}</span>
+      {%- endif -%}
       {% render 'review-stars-whole', rating: rating %}
     </div>
     {% render 'review-date', submitted_at: submitted_at %}
@@ -35,13 +50,13 @@
       <p class="reviews-card__owns-label">Owns</p>
       <div class="reviews-card__owns-icons">
         {%- if owns_count >= 1 -%}
-          {% render 'review-product-icon', icon_type: own_1_icon_type, color_hex: own_1_color_hex %}
+          {% render 'review-product-icon', icon_type: own_1_icon_type, color_hex: own_1_color_hex, outline_url: own_1_outline_url %}
         {%- endif -%}
         {%- if owns_count >= 2 -%}
-          {% render 'review-product-icon', icon_type: own_2_icon_type, color_hex: own_2_color_hex %}
+          {% render 'review-product-icon', icon_type: own_2_icon_type, color_hex: own_2_color_hex, outline_url: own_2_outline_url %}
         {%- endif -%}
         {%- if owns_count >= 3 -%}
-          {% render 'review-product-icon', icon_type: own_3_icon_type, color_hex: own_3_color_hex %}
+          {% render 'review-product-icon', icon_type: own_3_icon_type, color_hex: own_3_color_hex, outline_url: own_3_outline_url %}
         {%- endif -%}
       </div>
     </div>
