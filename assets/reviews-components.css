@@ -10,7 +10,7 @@
   --reviews-border-tertiary: rgba(0, 0, 0, 0.12);
   /* Post-M1 #5: neutral cool grey distribution bars (was olive/khaki tertiary) */
   --reviews-bar-track: #e5e5e3;
-  --reviews-bar-fill: #c4c4c1;
+  --reviews-bar-fill: #b0b0ad;
   --reviews-content-max-width: 840px;
   --reviews-radius-card: 8px;
   --reviews-font-body: Inter, system-ui, -apple-system, sans-serif;
