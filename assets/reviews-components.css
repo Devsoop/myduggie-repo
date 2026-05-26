@@ -283,6 +283,22 @@
   height: 100%;
 }
 
+.reviews-card__own-icon--outline .reviews-card__own-icon__shape {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: var(--reviews-own-color, #1f1f1e);
+  mask-image: var(--reviews-own-mask);
+  mask-mode: alpha;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-image: var(--reviews-own-mask);
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+}
+
 .reviews-card__usage {
   font-size: 12px;
   color: var(--reviews-text-tertiary);
@@ -356,6 +372,58 @@
   color: var(--reviews-text-secondary);
   margin: 0 0 24px;
   max-width: 52ch;
+}
+
+/* —— §5.5 / §5.5b status card (Thank-You + link inactive) —— */
+
+.reviews-surface--status {
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reviews-status-page {
+  width: 100%;
+  max-width: var(--reviews-content-max-width);
+  margin: 0 auto;
+  padding: 24px 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.reviews-status-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 32px;
+  text-align: center;
+  background: var(--reviews-bg-page);
+  border-radius: var(--reviews-radius-card);
+  border: 1px solid var(--reviews-border-tertiary);
+}
+
+.reviews-status-card__heading {
+  margin: 0 0 12px;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--reviews-text-primary);
+}
+
+.reviews-status-card__body {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--reviews-text-secondary);
+  max-width: 380px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.reviews-status-card__body a {
+  color: var(--reviews-text-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 @media screen and (max-width: 749px) {

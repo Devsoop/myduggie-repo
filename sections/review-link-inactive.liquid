@@ -1,0 +1,111 @@
+{{ 'reviews-components.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  §5.5b token state (M2 theme-only).
+
+  Shopify's request object does not expose URL query parameters on storefront pages
+  (request.params.state / request.params.order are always blank in theme Liquid).
+  See: https://shopify.dev/docs/api/liquid/objects/request
+
+  M2 behavior today:
+  - Defaults to "expired" copy (safe fallback per §5.5b).
+  - Theme editor "Preview state" → Expired or Already submitted for QA.
+  - URL ?state= / ?order= are NOT read (Shopify does not expose query params here).
+
+  M3 (App Proxy + form redirects):
+  - Validate signed token server-side (expired 60+ days, already submitted, invalid).
+  - Redirect to this page with link_state set server-side (proxy route, metafield flag, etc.).
+{%- endcomment -%}
+
+{%- liquid
+  assign link_state = 'expired'
+  assign preview_state = section.settings.preview_state | strip
+
+  if preview_state == 'used' or preview_state == 'expired'
+    assign link_state = preview_state
+  endif
+-%}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style reviews-surface reviews-surface--status section-{{ section.id }}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="reviews-status-page">
+    {% render 'review-status-card', link_state: link_state %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Review link inactive",
+  "tag": "section",
+  "class": "reviews-section-link-inactive",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        { "value": "page-width", "label": "t:options.page" },
+        { "value": "full-width", "label": "t:options.full" }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Preview (theme editor)"
+    },
+    {
+      "type": "select",
+      "id": "preview_state",
+      "label": "Preview state (M2 QA)",
+      "options": [
+        { "value": "", "label": "Expired (default)" },
+        { "value": "expired", "label": "Expired" },
+        { "value": "used", "label": "Already submitted" }
+      ],
+      "default": ""
+    },
+    {
+      "type": "paragraph",
+      "content": "§5.5b — M2: set Preview state to test both copy variants. Live URL always uses this setting (query params do not reach theme Liquid). Token validation + redirects: M3 App Proxy."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Review link inactive"
+    }
+  ]
+}
+{% endschema %}
