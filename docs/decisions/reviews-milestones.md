@@ -44,6 +44,8 @@ Computes from all **approved buyer** Review metaobjects (same filter as cards):
 
 Verify: Theme editor → **Aggregate rating block** → **Average override** → `4.3`.
 
+**Distribution bars (Brian M2 pivot):** fill-only `#B0B0AD` bars normalized to max star count; zero-count rows show label + `0` with no bar. No grey track.
+
 ---
 
 ## Milestone 2 — Data layer + §5.5b
@@ -149,6 +151,7 @@ Shape: `custom.outline_image` (CSS mask). Color: parallel `owns_colors` variant 
 | §5.7 / §5.8 recipient & gifter cards | |
 | §5.10–5.12 PDP reviews surface | Product-scoped queries |
 | Photo lightbox | |
+| Aggregate empty state (0 reviews) | M6 — hide block + “Be the first to review” (not in Build Guide yet) |
 
 ---
 

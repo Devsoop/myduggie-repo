@@ -107,11 +107,9 @@
   white-space: nowrap;
 }
 
-.reviews-aggregate__bar-track {
-  height: 8px;
-  background: transparent;
-  border-radius: 4px;
-  overflow: visible;
+/* Bar chart: fill segments only (Brian M2 — no visible track). .bar-cell holds grid column 2 when count is 0. */
+.reviews-aggregate__bar-cell {
+  min-height: 8px;
 }
 
 .reviews-aggregate__bar-fill {
@@ -120,12 +118,8 @@
   background: var(--reviews-bar-fill);
   border-radius: 4px;
   min-width: 0;
+  max-width: 100%;
   transition: width 0.2s ease;
-}
-
-.reviews-aggregate__bar-empty {
-  display: block;
-  height: 8px;
 }
 
 .reviews-aggregate__row-count {
