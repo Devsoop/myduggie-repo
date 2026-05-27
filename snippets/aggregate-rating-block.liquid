@@ -59,37 +59,57 @@
   <div class="reviews-aggregate__distribution" role="list">
     <div class="reviews-aggregate__row" role="listitem">
       <span class="reviews-aggregate__row-label">5 ★</span>
-      <div class="reviews-aggregate__bar-track">
-        <div class="reviews-aggregate__bar-fill" style="width: {{ pct_5 }}%;"></div>
-      </div>
+      {%- if count_5 > 0 -%}
+        <div class="reviews-aggregate__bar-track">
+          <div class="reviews-aggregate__bar-fill" style="width: {{ pct_5 }}%;"></div>
+        </div>
+      {%- else -%}
+        <span class="reviews-aggregate__bar-empty" aria-hidden="true"></span>
+      {%- endif -%}
       <span class="reviews-aggregate__row-count">{{ count_5 }}</span>
     </div>
     <div class="reviews-aggregate__row" role="listitem">
       <span class="reviews-aggregate__row-label">4 ★</span>
-      <div class="reviews-aggregate__bar-track">
-        <div class="reviews-aggregate__bar-fill" style="width: {{ pct_4 }}%;"></div>
-      </div>
+      {%- if count_4 > 0 -%}
+        <div class="reviews-aggregate__bar-track">
+          <div class="reviews-aggregate__bar-fill" style="width: {{ pct_4 }}%;"></div>
+        </div>
+      {%- else -%}
+        <span class="reviews-aggregate__bar-empty" aria-hidden="true"></span>
+      {%- endif -%}
       <span class="reviews-aggregate__row-count">{{ count_4 }}</span>
     </div>
     <div class="reviews-aggregate__row" role="listitem">
       <span class="reviews-aggregate__row-label">3 ★</span>
-      <div class="reviews-aggregate__bar-track">
-        <div class="reviews-aggregate__bar-fill" style="width: {{ pct_3 }}%;"></div>
-      </div>
+      {%- if count_3 > 0 -%}
+        <div class="reviews-aggregate__bar-track">
+          <div class="reviews-aggregate__bar-fill" style="width: {{ pct_3 }}%;"></div>
+        </div>
+      {%- else -%}
+        <span class="reviews-aggregate__bar-empty" aria-hidden="true"></span>
+      {%- endif -%}
       <span class="reviews-aggregate__row-count">{{ count_3 }}</span>
     </div>
     <div class="reviews-aggregate__row" role="listitem">
       <span class="reviews-aggregate__row-label">2 ★</span>
-      <div class="reviews-aggregate__bar-track">
-        <div class="reviews-aggregate__bar-fill" style="width: {{ pct_2 }}%;"></div>
-      </div>
+      {%- if count_2 > 0 -%}
+        <div class="reviews-aggregate__bar-track">
+          <div class="reviews-aggregate__bar-fill" style="width: {{ pct_2 }}%;"></div>
+        </div>
+      {%- else -%}
+        <span class="reviews-aggregate__bar-empty" aria-hidden="true"></span>
+      {%- endif -%}
       <span class="reviews-aggregate__row-count">{{ count_2 }}</span>
     </div>
     <div class="reviews-aggregate__row" role="listitem">
       <span class="reviews-aggregate__row-label">1 ★</span>
-      <div class="reviews-aggregate__bar-track">
-        <div class="reviews-aggregate__bar-fill" style="width: {{ pct_1 }}%;"></div>
-      </div>
+      {%- if count_1 > 0 -%}
+        <div class="reviews-aggregate__bar-track">
+          <div class="reviews-aggregate__bar-fill" style="width: {{ pct_1 }}%;"></div>
+        </div>
+      {%- else -%}
+        <span class="reviews-aggregate__bar-empty" aria-hidden="true"></span>
+      {%- endif -%}
       <span class="reviews-aggregate__row-count">{{ count_1 }}</span>
     </div>
   </div>

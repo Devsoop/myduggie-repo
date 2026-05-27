@@ -8,8 +8,7 @@
   --reviews-text-secondary: #5f5e5a;
   --reviews-text-tertiary: #888780;
   --reviews-border-tertiary: rgba(0, 0, 0, 0.12);
-  /* Post-M1 #5: neutral cool grey distribution bars (was olive/khaki tertiary) */
-  --reviews-bar-track: #e5e5e3;
+  /* Distribution bars: fill only (no track — Brian M2 pivot; not a progress bar) */
   --reviews-bar-fill: #b0b0ad;
   --reviews-content-max-width: 840px;
   --reviews-radius-card: 8px;
@@ -110,17 +109,23 @@
 
 .reviews-aggregate__bar-track {
   height: 8px;
-  background: var(--reviews-bar-track);
+  background: transparent;
   border-radius: 4px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .reviews-aggregate__bar-fill {
-  height: 100%;
+  display: block;
+  height: 8px;
   background: var(--reviews-bar-fill);
   border-radius: 4px;
   min-width: 0;
   transition: width 0.2s ease;
+}
+
+.reviews-aggregate__bar-empty {
+  display: block;
+  height: 8px;
 }
 
 .reviews-aggregate__row-count {

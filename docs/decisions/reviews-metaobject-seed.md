@@ -1,51 +1,23 @@
 # Review metaobject — seed guide
 
-Create **Review** metaobject entries in Admin for dev/testing. Complete the Admin checklist in [`reviews-milestones.md`](./reviews-milestones.md) first.
+Create **Review** metaobject entries in Admin. Schema: [`reviews-milestones.md`](./reviews-milestones.md) (M2 checklist).
+
+**Show on `/pages/reviews-test` when:** `reviewer_type` = `buyer`, `status` = `approved`.
 
 ---
 
-## Prerequisites
+## Field quick reference
 
-1. Metaobject type `review` exists with all §4.1 fields (storefront access enabled).
-2. Catalog products exist for `owns` picks (e.g. Lil' Duggie, Keychain).
-3. Per product: `custom.outline_image` and color setup (`shopify.color-pattern` or Color swatches).
+| Field | Notes |
+|-------|--------|
+| Handle | Any unique id (e.g. `r01`, `444`) |
+| `reviewer_name` | One line → card shows first + last initial |
+| `answers` | JSON below |
+| `owns` / `owns_colors` | Same length, same index order |
+| `is_sample` | `true` → Sample pill; `false` → Verified only |
+| `photos` | `[{ "url": "…", "alt": "…" }]` or `[]` |
 
----
-
-## Create entries
-
-**Content → Metaobjects → Review → Add entry**
-
-Show on `/pages/reviews-test` when:
-
-- `reviewer_type` = `buyer`
-- `status` = `approved`
-
-Recipient / gifter / accessory entries are stored but hidden until §5.7 / §5.8 cards exist.
-
-**Minimum for testing:** At least one approved buyer entry (handle can be anything).
-
----
-
-## Example buyer entry
-
-| Metaobject field | Example |
-|------------------|---------|
-| Handle | `r01` (optional; any unique handle) |
-| `order_id` | `gid://shopify/Order/1001` |
-| `reviewer_type` | `buyer` |
-| `reviewer_name` | `Alex Rivera` |
-| `rating` | `5` |
-| `answers` | JSON — see shape below |
-| `photos` | JSON array `[{ "url": "https://…", "alt": "…" }]` or empty |
-| `owns` | Multi-select products |
-| `owns_colors` | Multi-select **variants** — one per `owns` product, **same order** |
-| `gave` | `[]` for buyers |
-| `status` | `approved` |
-| `is_sample` | `false` (or `true` to test Sample pill) |
-| `submitted_at` | e.g. `2026-05-10T14:00:00Z` |
-
-### `answers` JSON shape
+### `answers` JSON
 
 ```json
 {
@@ -57,11 +29,51 @@ Recipient / gifter / accessory entries are stored but hidden until §5.7 / §5.8
       "prompt_key": "surprised",
       "label": "What surprised you?",
       "display_label": "What surprised you?",
-      "body": "Slate Blue reads warmer in person."
+      "body": "…"
+    }
+  ]
+}
+```
+
+Blank `prose[].body` → that block hidden. Optional keys: `wish_different` / `anything_else` prose objects with `"body": ""`.
+
+**Returns badge (TEMP-DEV until M3):** add `"order_returned": true` in `answers` (not a §4.1 metaobject field). Theme: `review-buyer-card-from-metaobject.liquid`.
+
+---
+
+## Dev store QA (what we seeded)
+
+| Handle | Purpose | `is_sample` | `answers` notes |
+|--------|---------|-------------|-----------------|
+| `444` | Sparse prose (1 block) + **Order returned** | `false` | `order_returned: true`, one prose `body` filled |
+| `987` | Sparse prose (2 blocks) + Sample pill | `true` | Two prose `body` filled, third empty/omitted |
+| `r03222` | Full prose, no Sample | `false` | Three prose blocks filled |
+| `r01` | Full card / Sample contrast | `true` | Normal full review |
+
+**Combined JSON used on `444`** (sparse + returns in one entry):
+
+```json
+{
+  "how_often": "Daily",
+  "where_it_lives": "Pocket carry",
+  "dugout_experience": "Dugout veteran",
+  "order_returned": true,
+  "prose": [
+    {
+      "prompt_key": "surprised",
+      "label": "What surprised you?",
+      "display_label": "What surprised you?",
+      "body": "Only one prose block — others must not render."
+    },
+    {
+      "prompt_key": "wish_different",
+      "label": "Anything you wish were different?",
+      "display_label": "Anything you wish were different?",
+      "body": ""
     },
     {
       "prompt_key": "anything_else",
-      "label": "Anything else? (Optional)",
+      "label": "Anything else?",
       "display_label": "Anything else?",
       "body": ""
     }
@@ -69,28 +81,14 @@ Recipient / gifter / accessory entries are stored but hidden until §5.7 / §5.8
 }
 ```
 
-Blank `prose[].body` hides that block on the card (M1 revision #6).
-
 ---
 
 ## `owns` + `owns_colors`
 
-Per Build Guide §4.1 — parallel lists by **index**:
-
-1. **`owns`** → products the reviewer owns.
-2. **`owns_colors`** → one **variant** per product (recipient-picked color).
-3. Counts must match (2 products → 2 variants).
+Two products → two variants, same order. Per product: `custom.outline_image` + variant color (swatches or `shopify.color-pattern`).
 
 ---
 
-## Verify on storefront
+## Verify
 
-1. Open `/pages/reviews-test` — all **approved buyer** metaobjects render; aggregate matches the same set.
-2. Owns icons: filled `outline_image` + variant color (inspect `data-color-hex` if TEMP-DEBUG attrs still present).
-3. Link inactive: theme editor → **Preview state** on `review-link-inactive` section → `/pages/review-link-inactive`.
-
----
-
-## Removed: shop JSON metafield
-
-The theme no longer reads `shop.metafields.custom.reviews`. All test/production card data comes from **Review metaobjects** only.
+`/pages/reviews-test` — all approved buyers render; aggregate uses the same set.

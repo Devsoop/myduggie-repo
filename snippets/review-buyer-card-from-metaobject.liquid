@@ -12,8 +12,6 @@
   assign rating = review_entry.rating.value
   assign submitted_at = review_entry.submitted_at.value
   assign is_sample = review_entry.is_sample.value
-  # TODO M3: read live fulfillment status for the order (per §5.6 dynamic returns badge).
-  assign order_returned = false
 
   # §4.1 — single `reviewer_name` field (e.g. "Alex Rivera"); card renders first + last initial.
   assign reviewer_name = review_entry.reviewer_name.value
@@ -29,6 +27,19 @@
   endif
 
   assign answers = review_entry.answers.value
+
+  # TEMP-DEV (Brian M2 QA — Returns badge demo). Remove before M3 prod.
+  # M3: live fulfillment lookup on order_id (§5.6), not a stored review field.
+  # Seed Option A: optional boolean `order_returned` on Review metaobject in Admin.
+  # Seed Option B (no new field): `"order_returned": true` inside `answers` JSON — see reviews-metaobject-seed.md.
+  assign order_returned = false
+  if review_entry.order_returned.value == true
+    assign order_returned = true
+  endif
+  if order_returned == false and answers.order_returned == true
+    assign order_returned = true
+  endif
+
   assign how_often = answers.how_often
   assign where_it_lives = answers.where_it_lives
   assign dugout_experience = answers.dugout_experience
