@@ -1,0 +1,39 @@
+{%- liquid
+  assign p1 = "You gave one as a gift. You picked the set, shared it with someone special, saw it land. Anyone considering this as a gift wants to know how that felt. Your story is what they need."
+  assign p2 = "A few questions, a few sentences if you have them, photos if you took any — about a minute. Reviews may have helped you decide, and now yours will help the next person decide. Thank you for taking the time."
+-%}
+
+{%- capture form_fields -%}
+  <div class="reviews-form__prose">
+    <div class="reviews-form__field">
+      <textarea name="prose_1" rows="4" placeholder="How did the gift land?" data-reviews-required data-prose-key="gift_land" data-prose-label="How did the gift land?"></textarea>
+      <p class="reviews-form__error" data-error-for="prose_1" hidden></p>
+    </div>
+    <div class="reviews-form__field">
+      <textarea name="prose_2" rows="4" placeholder="How was the gift process?" data-prose-key="gift_process" data-prose-label="How was the gift process?"></textarea>
+    </div>
+    <div class="reviews-form__field">
+      <textarea name="prose_3" rows="4" placeholder="Anything else? Why you chose this gift, the occasion, the colors they picked — or whatever else feels worth sharing. (Optional)" data-prose-key="anything_else" data-prose-label="Anything else?"></textarea>
+    </div>
+  </div>
+{%- endcapture -%}
+
+{% render 'review-form-shell', form_type: 'gifter', p1: p1, p2: p2, form_fields: form_fields %}
+
+{% schema %}
+{
+  "name": "Review form — gifter",
+  "tag": "section",
+  "class": "reviews-section-form-gifter",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:settings.color_scheme", "default": "scheme-1" },
+    { "type": "select", "id": "section_width", "label": "t:settings.section_width", "default": "page-width", "options": [
+      { "value": "page-width", "label": "Page width" },
+      { "value": "full-width", "label": "Full width" }
+    ]},
+    { "type": "range", "id": "padding-block-start", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding top", "default": 24 },
+    { "type": "range", "id": "padding-block-end", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding bottom", "default": 24 }
+  ],
+  "presets": [{ "name": "Review form — gifter" }]
+}
+{% endschema %}

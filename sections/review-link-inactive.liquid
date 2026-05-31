@@ -1,20 +1,9 @@
 {{ 'reviews-components.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'reviews-link-inactive.js' | asset_url }}" defer></script>
 
 {%- comment -%}
-  §5.5b token state (M2 theme-only).
-
-  Shopify's request object does not expose URL query parameters on storefront pages
-  (request.params.state / request.params.order are always blank in theme Liquid).
-  See: https://shopify.dev/docs/api/liquid/objects/request
-
-  M2 behavior today:
-  - Defaults to "expired" copy (safe fallback per §5.5b).
-  - Theme editor "Preview state" → Expired or Already submitted for QA.
-  - URL ?state= / ?order= are NOT read (Shopify does not expose query params here).
-
-  M3 (App Proxy + form redirects):
-  - Validate signed token server-side (expired 60+ days, already submitted, invalid).
-  - Redirect to this page with link_state set server-side (proxy route, metafield flag, etc.).
+  §5.5b — M3: App Proxy sets reviews_link_state cookie (expired|used) before redirect.
+  Theme editor Preview state still works for QA when cookie absent.
 {%- endcomment -%}
 
 {%- liquid
@@ -30,9 +19,16 @@
 <div
   class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style reviews-surface reviews-surface--status section-{{ section.id }}"
   style="{% render 'spacing-style', settings: section.settings %}"
+  data-reviews-link-inactive
+  data-preview-state="{{ link_state }}"
 >
   <div class="reviews-status-page">
-    {% render 'review-status-card', link_state: link_state %}
+    <div data-reviews-status-used hidden>
+      {% render 'review-status-card', link_state: 'used' %}
+    </div>
+    <div data-reviews-status-expired>
+      {% render 'review-status-card', link_state: 'expired' %}
+    </div>
   </div>
 </div>
 
@@ -89,7 +85,7 @@
     {
       "type": "select",
       "id": "preview_state",
-      "label": "Preview state (M2 QA)",
+      "label": "Preview state (editor QA)",
       "options": [
         { "value": "", "label": "Expired (default)" },
         { "value": "expired", "label": "Expired" },
@@ -99,7 +95,7 @@
     },
     {
       "type": "paragraph",
-      "content": "§5.5b — M2: set Preview state to test both copy variants. Live URL always uses this setting (query params do not reach theme Liquid). Token validation + redirects: M3 App Proxy."
+      "content": "Production: App Proxy sets reviews_link_state cookie. Theme editor uses Preview state when cookie is absent."
     }
   ],
   "presets": [

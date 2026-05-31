@@ -136,22 +136,38 @@ Shape: `custom.outline_image` (CSS mask). Color: parallel `owns_colors` variant 
 | Page | URL |
 |------|-----|
 | Reviews test | `/pages/reviews-test` |
-| Link inactive | `/pages/review-link-inactive` (set Preview state in theme editor) |
+| Link inactive | `/pages/review-link-inactive` (cookie state from App Proxy; editor Preview for QA) |
+| Review forms | `/pages/review-buyer`, `review-recipient`, `review-gifter`, `review-accessory` |
+| Thank you | `/pages/review-thank-you` |
 
 ---
 
-## Milestone 3+ (deferred)
+## Milestone 3 — Backend submission (gate)
+
+**Scope:** App Proxy + signed tokens + all four forms + thank-you + §5.5b cookie routing.
+
+See [`reviews-milestone-3.md`](./reviews-milestone-3.md).
+
+| Deliverable | Status |
+|-------------|--------|
+| App Proxy + `REVIEWS_TOKEN_SECRET` env | Done — `reviews-app/` |
+| Forms §5.1–5.4 + §5.5 | Done |
+| Submit → metaobject `approved` + `is_sample` copy | Done |
+
+---
+
+## Milestone 4+ (deferred)
 
 | Item | Notes |
 |------|--------|
-| App Proxy + `custom.reviews_token_secret` | Submit, validate tokens |
-| §5.1–5.4 forms, §5.5 thank-you | Form milestone |
-| `is_sample_reviewer` → `is_sample` on submit | |
 | Theme read `review_count` / `average_rating` on PDP | + rollup webhook |
 | §5.7 / §5.8 recipient & gifter cards | |
 | §5.10–5.12 PDP reviews surface | Product-scoped queries |
 | Photo lightbox | |
-| Aggregate empty state (0 reviews) | M6 — hide block + “Be the first to review” (not in Build Guide yet) |
+| Returns badge live fulfillment lookup | Replace TEMP-DEV |
+| Gifter `gave` from Gift Flow | Stub at M3 |
+| Aggregate empty state (0 reviews) | M6 |
+| Remove TEMP-DEBUG attrs on Owns icons | |
 
 ---
 
@@ -166,25 +182,32 @@ sections/
   review-card-buyer.liquid
   aggregate-rating-block.liquid
   review-link-inactive.liquid
+  review-form-buyer.liquid
+  review-form-recipient.liquid
+  review-form-gifter.liquid
+  review-form-accessory.liquid
+  review-thank-you.liquid
 
 snippets/
+  review-form-shell.liquid
   review-card-buyer.liquid
-  review-buyer-card-from-metaobject.liquid
-  review-status-card.liquid
-  aggregate-rating-block.liquid
-  review-product-icon.liquid
-  review-variant-color-hex.liquid
-  review-product-outline-url.liquid
-  review-reviewer-name-parts.liquid
-  review-icon-type-from-handle.liquid
-  review-stars-aggregate.liquid
   …
 
 assets/
   reviews-components.css
-  review-outline-*.svg
+  reviews-form.js
+  reviews-link-inactive.js
 
 templates/
   page.reviews-test.json
   page.review-link-inactive.json
+  page.review-buyer.json
+  page.review-recipient.json
+  page.review-gifter.json
+  page.review-accessory.json
+  page.review-thank-you.json
+
+reviews-app/
+  src/server.ts
+  src/lib/
 ```

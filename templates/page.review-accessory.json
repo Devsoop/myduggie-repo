@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "form": {
+      "type": "review-form-accessory",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "section_width": "page-width",
+        "padding-block-start": 24,
+        "padding-block-end": 24
+      }
+    }
+  },
+  "order": ["form"]
+}

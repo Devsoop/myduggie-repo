@@ -102,5 +102,6 @@ templates/page.review-link-inactive.json
 
 ## Notes
 
-- M3+: forms, App Proxy submit, PDP surface — see milestones doc.
-- Keep credentials out of git; use Shopify CLI auth only.
+- **M3:** App Proxy backend in [`reviews-app/`](reviews-app/); forms at `/pages/review-*`. See [`docs/decisions/reviews-milestone-3.md`](docs/decisions/reviews-milestone-3.md).
+- M4+: PDP surface, rollup webhook — see milestones doc.
+- Keep credentials out of git; use Shopify CLI auth for theme, `.env` for reviews-app.
