@@ -1,0 +1,43 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "aggregate": {
+      "type": "aggregate-rating-block",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "section_width": "page-width",
+        "padding-block-start": 24,
+        "padding-block-end": 0,
+        "average_override": "",
+        "caption_prefix": "From"
+      }
+    },
+    "buyer_cards": {
+      "type": "review-card-buyer",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "section_width": "page-width",
+        "padding-block-start": 0,
+        "padding-block-end": 24,
+        "heading": "",
+        "intro": "",
+        "verified_buyer_label": "Verified buyer",
+        "sample_label": "Sample",
+        "returns_label": "Order returned",
+        "photo_limit": 4
+      }
+    }
+  },
+  "order": [
+    "aggregate",
+    "buyer_cards"
+  ]
+}
